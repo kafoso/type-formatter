@@ -1,0 +1,39 @@
+{
+    "name": "kafoso/type-formatter",
+    "description": "Minimalistic, lightweight library for converting PHP data types to readable strings. Great for type-safe outputs, exception messages, transparency during debugging, and similar things. Also helps avoiding innate problems such as printing recursive objects and large arrays.",
+    "type": "library",
+    "require": {
+        "php": "^7.1",
+        "ext-mbstring": "^7.1",
+        "doctrine/collections": "^1"
+    },
+    "require-dev": {
+        "ext-xml": "*",
+        "doctrine/dbal": "2.5.*",
+        "doctrine/orm": "2.5.*",
+        "phpunit/phpunit": "^7.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kasper Søfren",
+            "email": "soefritz@gmail.com",
+            "homepage": "https://github.com/kafoso"
+        }
+    ],
+    "config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Kafoso\\TypeFormatter\\": "src/Kafoso/TypeFormatter"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kafoso\\TypeFormatter\\TestResource\\": "tests/resources/TestResource",
+            "Kafoso\\TypeFormatter\\Test\\": "tests/tests/Test"
+        }
+    }
+}
