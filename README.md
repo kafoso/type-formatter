@@ -6,6 +6,7 @@ Minimalistic, lightweight library for converting PHP data types to readable stri
 [comment]: # (The README.md is generated using `script/generate-readme.php`)
 
 
+<a name="requirements"></a>
 # Requirements
 
 ```json
@@ -559,42 +560,53 @@ To run tests, fix bugs, provide features, etc. the following is required:
 - A system capable of running a virtual machine with [ubuntu/xenial64](https://app.vagrantup.com/ubuntu/boxes/xenial64) (currently Ubuntu 16.04.5 LTS).
 - [Virtualbox](https://www.virtualbox.org/) >= 5.1.0
 - [Vagrant](https://www.vagrantup.com/) >= 2.0.0
+- [Ruby](https://www.ruby-lang.org/en/) (programming language) for installing the Vagrant box.
 
-You may of course install everything manually using your own VM setup. For help and a stack list (required apt-get packages), see the [Vagrantfile](Vagrantfile).
+You may of course install everything manually using your own VM setup. For help and a stack list (required apt-get packages), see the [tests/Vagrantfile](tests/Vagrantfile).
 
 ## Installation to run tests
 
-A few steps are required to run all tests. Unit tests ([tests/tests/Test/Unit](tests/tests/Test/Unit)) will run on all environments. However, integration tests ([tests/tests/Test/Integration](tests/tests/Test/Integration)) require the following because they test against a running Firebird database in the VM:
+A few steps are required to run all tests.
+
+**Unit tests** ([tests/tests/Test/Unit](tests/tests/Test/Unit)) will run on all environments that conform to the basic [requirements](#requirements).
+
+**Integration tests** ([tests/tests/Test/Integration](tests/tests/Test/Integration)) require the following because they test against a running Firebird database in the VM.
+
+To set up the Vagrant box, follow these steps:
 
 1. `composer install`
-2. `vagrant up`<br>Install/provision the VM.
-3. `vagrant ssh`
-4. `sudo su`
-5. To install MySQL, follow this guide, [https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04). Essentially:
+2. `cd tests`
+3. `vagrant up`<br>Install/provision the VM.
+4. `vagrant ssh`
+5. `sudo su`
+6. To install MySQL, follow this guide, [https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04). Essentially:
   - `apt update`
   - `apt install mysql-server`
   - `mysql_secure_installation` and set up the MySQL Server.
-  - `mysql`
-    - In MySQL:
-      - `SET GLOBAL validate_password_policy=LOW;`
-      - `ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '8364f9f87133242a9bd8d230da24379d';` (password is reused later)
+    - Password for `root` user: `8364f9f87133242a9bd8d230da24379d`
 
 ## Running tests
 
+For all tests, first follow these steps:
+
 **Unit tests** will run on most systems.
 
-```sh
+```
 cd tests
-../bin/phpunit tests/Test/Unit
+php ../bin/phpunit tests/Test/Unit
 ```
 
 **Integration tests** require that you run them in the Vagrant VM, which in turn require that you set up the MySQL Server mentioned above.
 
-```sh
-vagrant ssh
-vagrant@ubuntu-xenial: cd /var/git/kafoso/type-formatter/tests
-vagrant@ubuntu-xenial: php ../bin/phpunit tests/Test/Integration
 ```
+cd tests
+vagrant ssh
+vagrant@ubuntu-xenial:~$ sudo su
+root@ubuntu-xenial:/home/vagrant# cd /var/git/kafoso/type-formatter/tests
+root@ubuntu-xenial:/var/git/kafoso/type-formatter/tests# php ../bin/phpunit tests/Test/Integration
+```
+
+Unit tests may of course also be run inside the Vagrant box.
 
 # Credits
 
