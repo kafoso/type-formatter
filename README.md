@@ -38,11 +38,11 @@ Via GitHub:
 The data types are converted as illustrated in the table below.
 
 |Type|Conversion logic|Example(s)|Note|
-|---|---|---|---|---|
-|Null|As is.|`null`||
-|Booleans|As is.|`true`<br>`false`||
+|---|---|---|---|
+|Null|As is.|`null`| |
+|Booleans|As is.|`true`<br>`false`| |
 |Float numbers|As is.|`3.14`|Standard float-to-string conversion rounding will occur, as produced by `strval(3.14)`.|
-|Integers|As is.|`42`||
+|Integers|As is.|`42`| |
 |Strings|As is or as a sample (substring).|`"foo"`<br>`"bar ..." (sample)`|If you wish to control how strings are presented or apply conditions, you may do so by providing an instance of `\Kafoso\TypeFormatter\Type\StringFormatterInterface`. More on this interface and implementation <a href="#usage--type-specific-formatters--custom-string-formatter">further down</a>.|
 |Arrays|As is or as a sample.|`[0 => "foo"]`<br><br>`[0 => "bar" ... and 9 more elements]`|**Sub-arrays**<br>By default, no sub-arrays are displayed; i.e. the depth is zero. However, a custom depth may be specified.<br>Sub-arrays with depth 0 (zero) may appear as such: `[0 => (array(1)) [...]]`<br>Sub-arrays with depth 1 may appear as such: `[0 => (array(1)) ["foo"]]`<br><br>**Sampling and sample size**<br>By default, a maximum of 3 elements are displayed, before the " ... and X more elements" message is displayed. This number is also customizible.<br><br>**Custom array-to-string conversion**<br>If you wish to customize how arrays are being converted to a string, you may do so by providing an instance of `\Kafoso\TypeFormatter\Type\ArrayFormatterInterface`. More on this interface and implementation <a href="#usage--type-specific-formatters--custom-array-formatter">further down</a>.|
 |Objects|Class namespace with leading backslash.|`\stdClass`<br><br>`\class@anonymous/foo/bar/baz.php0x11038bd57`|Objects are rather complex types. As such, something sensible besides its class name cannot be reliably displayed. Not even using `__toString` or similar methods.<br><br>**Custom object-to-string conversion**<br>If you wish to customize how objects are being converted to a string, you may do so by providing an instance of `\Kafoso\TypeFormatter\Type\ObjectFormatterInterface`. More on this interface and implementation <a href="#usage--type-specific-formatters--custom-object-formatter">further down</a>.<br>This is especially useful for displaying relevant information in classes such as IDs in [Doctrine ORM entities](https://github.com/doctrine/orm).|
