@@ -346,7 +346,7 @@ class TypeFormatter
                 foreach ($this->customObjectFormatterCollection as $objectFormatter) {
                     $objectFormatter = $objectFormatter->withIsPrependingType(true);
                     $objectFormatter = $objectFormatter->withIsSamplifying($isSamplifying);
-                    $return = $customObjectFormatter->format($value);
+                    $return = $objectFormatter->format($value);
                     if (is_string($return)) {
                         return $return;
                     }
