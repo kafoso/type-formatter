@@ -570,7 +570,7 @@ A few steps are required to run all tests.
 
 **Unit tests** ([tests/tests/Test/Unit](tests/tests/Test/Unit)) will run on all environments that conform to the basic [requirements](#requirements).
 
-**Integration tests** ([tests/tests/Test/Integration](tests/tests/Test/Integration)) require the following because they test against a running Firebird database in the VM.
+**Integration tests** ([tests/tests/Test/Integration](tests/tests/Test/Integration)) require the following because they test against a running MySQL database in the VM.
 
 To set up the Vagrant box, follow these steps:
 

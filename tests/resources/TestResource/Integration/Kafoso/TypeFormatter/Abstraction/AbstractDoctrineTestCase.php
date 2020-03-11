@@ -25,7 +25,7 @@ class AbstractDoctrineTestCase extends TestCase
             array_diff_key($configurationArray, ["dbname" => null]),
             $configuration
         );
-        static::reinstallFirebirdDatabase($connectionWithoutDatabase, $configurationArray);
+        static::reinstallMySQLDatabase($connectionWithoutDatabase, $configurationArray);
         $connection = $connectionWithoutDatabase = static::createConnection($configurationArray, $configuration);
         $this->entityManager = EntityManager::create($connection, $configuration);
     }
@@ -53,7 +53,7 @@ class AbstractDoctrineTestCase extends TestCase
         return DriverManager::getConnection($configurationArray, $configuration, new EventManager());
     }
 
-    protected static function reinstallFirebirdDatabase(Connection $connection, array $configurationArray)
+    protected static function reinstallMySQLDatabase(Connection $connection, array $configurationArray)
     {
         $stmt = $connection->prepare(sprintf(
             "DROP DATABASE IF EXISTS %s",
