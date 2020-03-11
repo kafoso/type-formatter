@@ -11,7 +11,7 @@
         "ext-xml": "*",
         "doctrine/dbal": "2.5.*",
         "doctrine/orm": "2.5.*",
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^8.5.2"
     },
     "license": "MIT",
     "authors": [

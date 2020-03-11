@@ -17,7 +17,7 @@ class AbstractDoctrineTestCase extends TestCase
      */
     private $entityManager = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         $configuration = static::getSetUpDoctrineConfiguration();
         $configurationArray = static::getSetUpDoctrineConfigurationArray();
@@ -30,7 +30,7 @@ class AbstractDoctrineTestCase extends TestCase
         $this->entityManager = EntityManager::create($connection, $configuration);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if ($this->entityManager) {
             $this->entityManager->getConnection()->close();
