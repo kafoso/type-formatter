@@ -81,7 +81,11 @@ class DoctrineEntityFormatterTest extends TestCase
         $classMetadata
             ->expects($this->any())
             ->method('getIdentifierFieldNames')
-            ->willReturn(["entityB", "entityB", "id"]);
+            ->willReturnOnConsecutiveCalls(
+                $this->returnValue(["entityB"]),
+                $this->returnValue(["entityB"]),
+                $this->returnValue(["id"])
+            );
         $entityManager
             ->expects($this->any())
             ->method('getClassMetadata')

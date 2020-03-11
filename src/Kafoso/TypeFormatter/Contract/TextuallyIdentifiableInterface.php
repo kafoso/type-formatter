@@ -20,5 +20,10 @@ interface TextuallyIdentifiableInterface
      *
      * \MyUserClass (USER.ID = 22)
      */
+    public function toTextualIdentifier(): string;
+
+    /**
+     * @deprecated To be removed in 2.0.0. Instead, use: `toTextualIdentifier`.
+     */
     public function getTextualIdentifier(): string;
 }
