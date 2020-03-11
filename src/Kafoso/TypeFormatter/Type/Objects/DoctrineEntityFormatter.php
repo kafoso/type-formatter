@@ -100,7 +100,7 @@ class DoctrineEntityFormatter extends AbstractFormatter implements ObjectFormatt
      */
     protected function _generateIdentifierArray($object): array
     {
-        $className = get_class($object);
+        $className = static::getOriginalClassName($object);
         $classMetadata = $this->entityManager->getClassMetadata($className);
         if ($classMetadata) {
             $array = [];

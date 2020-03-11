@@ -3,8 +3,8 @@
     "description": "Minimalistic, lightweight library for converting PHP data types to readable strings. Great for type-safe outputs, exception messages, transparency during debugging, and similar things. Also helps avoiding innate problems such as printing recursive objects and large arrays.",
     "type": "library",
     "require": {
-        "php": "^7.1",
-        "ext-mbstring": "^7.1",
+        "php": ">=7.2",
+        "ext-mbstring": ">=7.2",
         "doctrine/collections": "^1"
     },
     "require-dev": {

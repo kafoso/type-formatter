@@ -10,8 +10,8 @@ Minimalistic, lightweight library for converting PHP data types to readable stri
 # Requirements
 
 ```json
-"php": "^7.1",
-"ext-mbstring": "^7.1",
+"php": ">=7.2",
+"ext-mbstring": ">=7.2",
 "doctrine/collections": "^1"
 ```
 
@@ -581,7 +581,7 @@ To set up the Vagrant box, follow these steps:
 5. `sudo su`
 6. To install MySQL, follow this guide, [https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04). Essentially:
   - `apt update`
-  - `apt install mysql-server`
+  - `apt install -y mysql-server`
   - `mysql_secure_installation` and set up the MySQL Server.
     - Password for `root` user: `8364f9f87133242a9bd8d230da24379d`
 
