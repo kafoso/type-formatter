@@ -81,11 +81,6 @@ class DoctrineEntityFormatterTest extends TestCase
         $classMetadata
             ->expects($this->any())
             ->method('getIdentifierFieldNames')
-            ->withConsecutive(
-                $this->equalTo(testItWorksWithASingleEntityId\EntityA::class),
-                $this->equalTo(testItWorksWithASingleEntityId\EntityA::class),
-                $this->equalTo(testItWorksWithASingleEntityId\EntityB::class)
-            )
             ->willReturnOnConsecutiveCalls(
                 $this->returnValue(["entityB"]),
                 $this->returnValue(["entityB"]),
@@ -178,9 +173,9 @@ class DoctrineEntityFormatterTest extends TestCase
             ->expects($this->any())
             ->method('getClassMetadata')
             ->withConsecutive(
-                $this->equalTo(testItWorksWithCompositeEntityIds\EntityA::class),
-                $this->equalTo(testItWorksWithCompositeEntityIds\EntityB::class),
-                $this->equalTo(testItWorksWithCompositeEntityIds\EntityB::class)
+                [$this->equalTo(testItWorksWithCompositeEntityIds\EntityA::class)],
+                [$this->equalTo(testItWorksWithCompositeEntityIds\EntityB::class)],
+                [$this->equalTo(testItWorksWithCompositeEntityIds\EntityC::class)]
             )
             ->willReturnOnConsecutiveCalls(
                 $this->returnValue($classMetadataA),
