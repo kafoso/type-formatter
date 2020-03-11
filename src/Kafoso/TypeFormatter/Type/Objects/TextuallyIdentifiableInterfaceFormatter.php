@@ -22,14 +22,6 @@ class TextuallyIdentifiableInterfaceFormatter extends AbstractFormatter implemen
         if (false == $this->isQualified($object)) {
             return null;
         }
-        @trigger_error(
-            sprintf(
-                "Call to \\%s->getTextualIdentifier() is deprecated and will be removed in 2.0.0. Instead, please use"
-                    . " `toTextualIdentifier`.",
-                DefaultObjectFormatter::getClassName($object)
-            ),
-            E_USER_DEPRECATED
-        );
         return $object->toTextualIdentifier();
     }
 

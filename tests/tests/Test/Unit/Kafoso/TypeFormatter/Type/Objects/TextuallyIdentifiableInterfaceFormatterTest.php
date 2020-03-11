@@ -55,14 +55,6 @@ class TextuallyIdentifiableInterfaceFormatterTest extends TestCase
                     $this->typeFormatter->cast($this->id)
                 );
             }
-
-            /**
-             * @deprecated To be removed in 2.0.0. Instead, use: `toTextualIdentifier`.
-             */
-            public function getTextualIdentifier(): string
-            {
-                return $this->toTextualIdentifier();
-            }
         };
         $expected = '/^\\\\class@anonymous(.+) \{id = 22\}$/';
         $this->assertRegExp($expected, $textuallyIdentifiableInterfaceFormatter->format($object));
