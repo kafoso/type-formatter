@@ -47,13 +47,21 @@ class TextuallyIdentifiableInterfaceFormatterTest extends TestCase
                 $this->id = 22;
             }
 
-            public function getTextualIdentifier(): string
+            public function toTextualIdentifier(): string
             {
                 return sprintf(
                     "\\%s {id = %s}",
                     DefaultObjectFormatter::getClassName($this),
                     $this->typeFormatter->cast($this->id)
                 );
+            }
+
+            /**
+             * @deprecated To be removed in 2.0.0. Instead, use: `toTextualIdentifier`.
+             */
+            public function getTextualIdentifier(): string
+            {
+                return $this->toTextualIdentifier();
             }
         };
         $expected = '/^\\\\class@anonymous(.+) \{id = 22\}$/';
