@@ -9,7 +9,7 @@ require(__DIR__ . "/../../bootstrap.php"); // README.md.remove
 
 $customTypeFormatter = TypeFormatter::create();
 $customTypeFormatter = $customTypeFormatter->withCustomResourceFormatterCollection(new ResourceFormatterCollection([
-    new class ($entityManager) extends AbstractFormatter implements ResourceFormatterInterface
+    new class extends AbstractFormatter implements ResourceFormatterInterface
     {
         /**
          * @inheritDoc
@@ -17,12 +17,12 @@ $customTypeFormatter = $customTypeFormatter->withCustomResourceFormatterCollecti
         public function format($resource): ?string
         {
             if (false == is_resource($resource)) {
-                return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+                return null; // Pass on to next formatter or lastly DefaultResourceFormatter
             }
             if ("stream" === get_resource_type($resource)) {
                 return "opendir/fopen/tmpfile/popen/fsockopen/pfsockopen {$resource}";
             }
-            return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+            return null; // Pass on to next formatter or lastly DefaultResourceFormatter
         }
     },
     new class extends AbstractFormatter implements ResourceFormatterInterface
@@ -33,12 +33,12 @@ $customTypeFormatter = $customTypeFormatter->withCustomResourceFormatterCollecti
         public function format($resource): ?string
         {
             if (false == is_resource($resource)) {
-                return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+                return null; // Pass on to next formatter or lastly DefaultResourceFormatter
             }
             if ("xml" === get_resource_type($resource)) {
                 return "XML {$resource}";
             }
-            return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+            return null; // Pass on to next formatter or lastly DefaultResourceFormatter
         }
     },
 ]));

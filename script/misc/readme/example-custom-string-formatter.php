@@ -9,7 +9,7 @@ require(__DIR__ . "/../../bootstrap.php"); // README.md.remove
 
 $customTypeFormatter = TypeFormatter::create();
 $customTypeFormatter = $customTypeFormatter->withCustomStringFormatterCollection(new StringFormatterCollection([
-    new class ($entityManager) extends AbstractFormatter implements StringFormatterInterface
+    new class extends AbstractFormatter implements StringFormatterInterface
     {
         /**
          * @inheritDoc
@@ -19,7 +19,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomStringFormatterCollection
             if ("What do we like?" === $string) {
                 return $this->getTypeFormatter()->getDefaultStringFormatter()->format("CAKE!");
             }
-            return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+            return null; // Pass on to next formatter or lastly DefaultStringFormatter
         }
     },
 ]));

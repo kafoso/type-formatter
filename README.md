@@ -323,7 +323,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomObjectFormatterCollection
         public function format($object): ?string
         {
             if (false == is_object($object)) {
-                return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+                return null; // Pass on to next formatter or lastly DefaultObjectFormatter
             }
             if ($object instanceof \DateTimeInterface) {
                 return sprintf(
@@ -332,7 +332,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomObjectFormatterCollection
                     $object->format("c")
                 );
             }
-            return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+            return null; // Pass on to next formatter or lastly DefaultObjectFormatter
         }
     },
     new class extends AbstractFormatter implements ObjectFormatterInterface
@@ -343,7 +343,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomObjectFormatterCollection
         public function format($object): ?string
         {
             if (false == is_object($object)) {
-                return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+                return null; // Pass on to next formatter or lastly DefaultObjectFormatter
             }
             if ($object instanceof \Throwable) {
                 return sprintf(
@@ -355,7 +355,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomObjectFormatterCollection
                     $this->getTypeFormatter()->cast($object->getMessage())
                 );
             }
-            return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+            return null; // Pass on to next formatter or lastly DefaultObjectFormatter
         }
     },
     new class ($entityManager) extends AbstractFormatter implements ObjectFormatterInterface
@@ -376,7 +376,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomObjectFormatterCollection
         public function format($object): ?string
         {
             if (false == is_object($object)) {
-                return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+                return null; // Pass on to next formatter or lastly DefaultObjectFormatter
             }
             $className = ($object instanceof Proxy) ? get_parent_class($object) : DefaultObjectFormatter::getClassName($object);
             $isEntity = (false == $this->entityManager->getMetadataFactory()->isTransient($className));
@@ -392,7 +392,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomObjectFormatterCollection
                     $id
                 );
             }
-            return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+            return null; // Pass on to next formatter or lastly DefaultObjectFormatter
         }
     },
 ]));
@@ -464,7 +464,7 @@ use Kafoso\TypeFormatter\TypeFormatter;
 
 $customTypeFormatter = TypeFormatter::create();
 $customTypeFormatter = $customTypeFormatter->withCustomResourceFormatterCollection(new ResourceFormatterCollection([
-    new class ($entityManager) extends AbstractFormatter implements ResourceFormatterInterface
+    new class extends AbstractFormatter implements ResourceFormatterInterface
     {
         /**
          * @inheritDoc
@@ -472,12 +472,12 @@ $customTypeFormatter = $customTypeFormatter->withCustomResourceFormatterCollecti
         public function format($resource): ?string
         {
             if (false == is_resource($resource)) {
-                return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+                return null; // Pass on to next formatter or lastly DefaultResourceFormatter
             }
             if ("stream" === get_resource_type($resource)) {
                 return "opendir/fopen/tmpfile/popen/fsockopen/pfsockopen {$resource}";
             }
-            return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+            return null; // Pass on to next formatter or lastly DefaultResourceFormatter
         }
     },
     new class extends AbstractFormatter implements ResourceFormatterInterface
@@ -488,12 +488,12 @@ $customTypeFormatter = $customTypeFormatter->withCustomResourceFormatterCollecti
         public function format($resource): ?string
         {
             if (false == is_resource($resource)) {
-                return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+                return null; // Pass on to next formatter or lastly DefaultResourceFormatter
             }
             if ("xml" === get_resource_type($resource)) {
                 return "XML {$resource}";
             }
-            return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+            return null; // Pass on to next formatter or lastly DefaultResourceFormatter
         }
     },
 ]));
@@ -527,7 +527,7 @@ use Kafoso\TypeFormatter\TypeFormatter;
 
 $customTypeFormatter = TypeFormatter::create();
 $customTypeFormatter = $customTypeFormatter->withCustomStringFormatterCollection(new StringFormatterCollection([
-    new class ($entityManager) extends AbstractFormatter implements StringFormatterInterface
+    new class extends AbstractFormatter implements StringFormatterInterface
     {
         /**
          * @inheritDoc
@@ -537,7 +537,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomStringFormatterCollection
             if ("What do we like?" === $string) {
                 return $this->getTypeFormatter()->getDefaultStringFormatter()->format("CAKE!");
             }
-            return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+            return null; // Pass on to next formatter or lastly DefaultStringFormatter
         }
     },
 ]));

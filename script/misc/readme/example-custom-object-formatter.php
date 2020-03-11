@@ -36,7 +36,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomObjectFormatterCollection
         public function format($object): ?string
         {
             if (false == is_object($object)) {
-                return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+                return null; // Pass on to next formatter or lastly DefaultObjectFormatter
             }
             if ($object instanceof \DateTimeInterface) {
                 return sprintf(
@@ -45,7 +45,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomObjectFormatterCollection
                     $object->format("c")
                 );
             }
-            return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+            return null; // Pass on to next formatter or lastly DefaultObjectFormatter
         }
     },
     new class extends AbstractFormatter implements ObjectFormatterInterface
@@ -56,7 +56,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomObjectFormatterCollection
         public function format($object): ?string
         {
             if (false == is_object($object)) {
-                return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+                return null; // Pass on to next formatter or lastly DefaultObjectFormatter
             }
             if ($object instanceof \Throwable) {
                 return sprintf(
@@ -68,7 +68,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomObjectFormatterCollection
                     $this->getTypeFormatter()->cast($object->getMessage())
                 );
             }
-            return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+            return null; // Pass on to next formatter or lastly DefaultObjectFormatter
         }
     },
     new class ($entityManager) extends AbstractFormatter implements ObjectFormatterInterface
@@ -89,7 +89,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomObjectFormatterCollection
         public function format($object): ?string
         {
             if (false == is_object($object)) {
-                return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+                return null; // Pass on to next formatter or lastly DefaultObjectFormatter
             }
             $className = ($object instanceof Proxy) ? get_parent_class($object) : DefaultObjectFormatter::getClassName($object);
             $isEntity = (false == $this->entityManager->getMetadataFactory()->isTransient($className));
@@ -105,7 +105,7 @@ $customTypeFormatter = $customTypeFormatter->withCustomObjectFormatterCollection
                     $id
                 );
             }
-            return null; // Pass on to next formatter or lastly DefaultArrayFormatter
+            return null; // Pass on to next formatter or lastly DefaultObjectFormatter
         }
     },
 ]));
