@@ -226,6 +226,66 @@ class TypeFormatterTest extends TestCase
         $this->assertSame($expected, $typeFormatter->cast($array));
     }
 
+    /**
+     * @dataProvider dataProvider_testCastOnMaskedStringsWillNotCauseMaskingToBePartOfOtherMaskings
+     */
+    public function testCastOnMaskedStringsWillNotCauseMaskingToBePartOfOtherMaskings(
+        string $expected,
+        string $input,
+        EncryptedStringCollection $encryptedStringCollection
+    )
+    {
+        $typeFormatter = TypeFormatter::create();
+        $typeFormatter = $typeFormatter->withMaskedEncryptedStringCollection($encryptedStringCollection);
+        $this->assertSame($expected, $typeFormatter->cast($input));
+    }
+
+    public function dataProvider_testCastOnMaskedStringsWillNotCauseMaskingToBePartOfOtherMaskings()
+    {
+        return [
+            [
+                '"foo ***** baz ***** bim" (masked)',
+                'foo bar baz *** bim',
+                new EncryptedStringCollection([
+                    new EncryptedString("***"),
+                    new EncryptedString("bar"),
+                ]),
+            ],
+            [
+                '"foo ***** baz ***** bim" (masked)',
+                'foo bar baz *** bim',
+                new EncryptedStringCollection([
+                    new EncryptedString("bar"),
+                    new EncryptedString("***"),
+                ]),
+            ],
+            [
+                '"foo ***** ***** baz bim" (masked)',
+                'foo *** bar baz bim',
+                new EncryptedStringCollection([
+                    new EncryptedString("***"),
+                    new EncryptedString("bar"),
+                ]),
+            ],
+            [
+                '"foo ***** ***** baz bim" (masked)',
+                'foo *** bar baz bim',
+                new EncryptedStringCollection([
+                    new EncryptedString("bar"),
+                    new EncryptedString("***"),
+                ]),
+            ],
+            [
+                '"foo ***** bar" (masked)',
+                'foo ********** bar',
+                new EncryptedStringCollection([
+                    new EncryptedString("***"),
+                    new EncryptedString("**********"),
+                ]),
+            ],
+        ];
+    }
+
     public function testCastWorksWithCustomFormatters()
     {
         $typeFormatter = TypeFormatter::create();

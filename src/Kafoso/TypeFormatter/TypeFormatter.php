@@ -407,8 +407,27 @@ class TypeFormatter
                 uasort($maskedStrings, function(string $a, string $b){
                     return (mb_strlen($a, (string)$this->encoding) <=> mb_strlen($b, (string)$this->encoding)) * (-1);
                 });
-                foreach ($maskedStrings as $maskedString) {
-                    $str = str_replace($maskedString, static::STRING_MASK, $str);
+                $split = preg_split(
+                    sprintf(
+                        '/(%s)/',
+                        implode("|", array_map(function(string $maskedString){
+                            return preg_quote($maskedString, '/');
+                        }, $maskedStrings))
+                    ),
+                    $str,
+                    -1
+                );
+                if ($split && count($split) > 1) {
+                    $split = array_values($split);
+                    $max = count($split)-1;
+                    $segments = [];
+                    for ($i=0; $i<=$max; $i++) {
+                        if ($i > 0) {
+                            $segments[] = static::STRING_MASK;
+                        }
+                        $segments[] = $split[$i];
+                    }
+                    return implode("", $segments);
                 }
             }
         }
