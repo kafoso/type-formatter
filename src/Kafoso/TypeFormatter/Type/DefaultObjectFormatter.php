@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace Kafoso\TypeFormatter\Type;
 
 use Kafoso\TypeFormatter\Abstraction\Type\AbstractFormatter;
+use Kafoso\TypeFormatter\Contract\TextuallyIdentifiableInterface;
+use Kafoso\TypeFormatter\Type\Objects\TextuallyIdentifiableInterfaceFormatter;
 use Kafoso\TypeFormatter\TypeFormatter;
 
 class DefaultObjectFormatter extends AbstractFormatter implements ObjectFormatterInterface
@@ -19,6 +21,22 @@ class DefaultObjectFormatter extends AbstractFormatter implements ObjectFormatte
                 TypeFormatter::create()->typeCast($object)
             ));
         }
+
+        if ($object instanceof TextuallyIdentifiableInterface) {
+            $formatter = new TextuallyIdentifiableInterfaceFormatter;
+            $formatter->setTypeFormatter($this->typeFormatter);
+            $return = $formatter->format($object);
+            if (is_string($return)) {
+                if ($this->isPrependingType()) {
+                    $return = sprintf(
+                        "(object) %s",
+                        $return
+                    );
+                }
+                return $return;
+            }
+        }
+
         $className = static::getClassName($object);
         $return = sprintf(
             "\\%s",

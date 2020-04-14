@@ -9,6 +9,7 @@ use Kafoso\TypeFormatter\Collection\Type\ObjectFormatterCollection;
 use Kafoso\TypeFormatter\Collection\Type\ResourceFormatterCollection;
 use Kafoso\TypeFormatter\Collection\Type\StringFormatterCollection;
 use Kafoso\TypeFormatter\Collection\EncryptedStringCollection;
+use Kafoso\TypeFormatter\Contract\TextuallyIdentifiableInterface;
 use Kafoso\TypeFormatter\Type\DefaultArrayFormatter;
 use Kafoso\TypeFormatter\Type\DefaultObjectFormatter;
 use Kafoso\TypeFormatter\Type\DefaultResourceFormatter;
@@ -93,6 +94,12 @@ class TypeFormatterTest extends TestCase
             ['3.14', 3.14],
             ['"foo"', "foo"],
             ['\stdClass', new \stdClass],
+            ['AnonymousClass', new class implements TextuallyIdentifiableInterface {
+                public function toTextualIdentifier(): string
+                {
+                    return "AnonymousClass";
+                }
+            }],
             ['[0 => "foo", 1 => 42]', ["foo", 42]],
         ];
     }
@@ -421,6 +428,12 @@ class TypeFormatterTest extends TestCase
             ['(int) 42', 42],
             ['(string(3)) "foo"', "foo"],
             ['(object) \\stdClass', new \stdClass],
+            ['(object) AnonymousClass', new class implements TextuallyIdentifiableInterface {
+                public function toTextualIdentifier(): string
+                {
+                    return "AnonymousClass";
+                }
+            }],
             ['(array(3)) [(int) 0 => (int) 1, (int) 1 => (int) 2, (int) 2 => (int) 3]', [1, 2, 3]],
         ];
     }
